@@ -32,3 +32,6 @@ Route::post('logout', [LoginController::class, 'logout']);
 
 
 Route::get('users', [UserTest::class, 'index']);
+
+
+
