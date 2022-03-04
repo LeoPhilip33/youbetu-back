@@ -17,14 +17,17 @@ class RegisterController extends Controller
             'password' => ['required', 'confirmed']
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
 
+        
+        $token=$user->createToken('token-name');
+
         if(Auth::attempt($request->only('email','password'))){
-            return response()->json(Auth::User(),200);
+            return response()->json([Auth::User(),200,$token->plainTextToken]);
         }
     }
 }
