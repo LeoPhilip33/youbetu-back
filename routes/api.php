@@ -4,7 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\TokenController;
 use App\Http\Controllers\UserTest;
+use App\Http\Controllers\VideoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,10 @@ Route::post('logout', [LoginController::class, 'logout']);
 
 
 Route::get('users', [UserTest::class, 'index']);
+Route::get('user-id', [UserTest::class, 'getId']);
+Route::get('token/{id}', [TokenController::class, 'index']);
 
+
+Route::apiResource('videos', VideoController::class);
 
 

@@ -5,17 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Video extends Model
+class PersonalAccessToken extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'description',
-        'miniature',
-        'video',
-        'user_id',
-        'views',
-        'likes',
+        'tokenable_id',
+        'token',
     ];
 }

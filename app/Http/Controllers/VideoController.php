@@ -15,7 +15,8 @@ class VideoController extends Controller
      */
     public function index()
     {
-        //
+        $videos = Video::all();
+        return $videos;
     }
 
     /**
@@ -36,7 +37,37 @@ class VideoController extends Controller
      */
     public function store(StoreVideoRequest $request)
     {
-        //
+         $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'miniature' => 'required',
+            'video' => 'required',
+            'user_id' => 'required',
+        ]);
+
+
+        $input = $request->all();
+
+        if ($miniature = $request->file('miniature')) {
+            $destinationPath = 'upload/miniature/';
+            $miniatureName = date('YmdHis') . "." . $miniature->getClientOriginalExtension();
+            $miniature->move($destinationPath, $miniatureName);
+            $input['miniature'] = $miniatureName;
+        }
+        if ($video = $request->file('video')) {
+            $destinationPath = 'upload/video/';
+            $videoName = date('YmdHis') . "." . $video->getClientOriginalExtension();
+            $video->move($destinationPath, $videoName);
+            $input['video'] = $videoName;
+        }
+
+        $user = Video::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'miniature' => $request->miniature,
+            'video' => $request->video,
+            'user_id' => $request->user_id,
+        ]);
     }
 
     /**
