@@ -49,25 +49,21 @@ class VideoController extends Controller
         $input = $request->all();
 
         if ($miniature = $request->file('miniature')) {
-            $destinationPath = 'upload/miniature/';
+            $destinationPath = 'upload/miniatures/';
             $miniatureName = date('YmdHis') . "." . $miniature->getClientOriginalExtension();
             $miniature->move($destinationPath, $miniatureName);
             $input['miniature'] = $miniatureName;
         }
         if ($video = $request->file('video')) {
-            $destinationPath = 'upload/video/';
+            $destinationPath = 'upload/videos/';
             $videoName = date('YmdHis') . "." . $video->getClientOriginalExtension();
             $video->move($destinationPath, $videoName);
             $input['video'] = $videoName;
         }
 
-        $user = Video::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'miniature' => $request->miniature,
-            'video' => $request->video,
-            'user_id' => $request->user_id,
-        ]);
+
+        Video::create($input);
+        
     }
 
     /**
