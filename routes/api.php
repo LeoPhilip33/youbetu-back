@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\TokenController;
 use App\Http\Controllers\UserTest;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\GetVideoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,10 +35,13 @@ Route::post('logout', [LoginController::class, 'logout']);
 
 
 Route::get('users', [UserTest::class, 'index']);
-Route::get('user-id', [UserTest::class, 'getId']);
+Route::get('user/{id}', [UserTest::class, 'getId']);
 Route::get('token/{id}', [TokenController::class, 'index']);
 
 
 Route::apiResource('videos', VideoController::class);
+Route::get('video/{id}', [GetVideoController::class, 'index']);
+
+
 
 

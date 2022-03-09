@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\VideoComments;
-use App\Http\Requests\StoreVideoCommentsRequest;
-use App\Http\Requests\UpdateVideoCommentsRequest;
+use App\Models\Video;
+use App\Http\Requests\StoreVideoRequest;
+use App\Http\Requests\UpdateVideoRequest;
 
-class VideoCommentsController extends Controller
+class GetVideoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,8 @@ class VideoCommentsController extends Controller
      */
     public function index()
     {
-        //
+        $videos = Video::all();
+        return $videos;
     }
 
     /**
@@ -31,32 +32,59 @@ class VideoCommentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreVideoCommentsRequest  $request
+     * @param  \App\Http\Requests\StoreVideoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreVideoCommentsRequest $request)
+    public function store(StoreVideoRequest $request)
     {
-        //
+         $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'miniature' => 'required',
+            'video' => 'required',
+            'user_id' => 'required',
+        ]);
+
+
+        $input = $request->all();
+
+        if ($miniature = $request->file('miniature')) {
+            $destinationPath = 'upload/miniatures/';
+            $miniatureName = date('YmdHis') . "." . $miniature->getClientOriginalExtension();
+            $miniature->move($destinationPath, $miniatureName);
+            $input['miniature'] = $miniatureName;
+        }
+        if ($video = $request->file('video')) {
+            $destinationPath = 'upload/videos/';
+            $videoName = date('YmdHis') . "." . $video->getClientOriginalExtension();
+            $video->move($destinationPath, $videoName);
+            $input['video'] = $videoName;
+        }
+
+
+        Video::create($input);
+        
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\VideoComments  $videoComments
+     * @param  \App\Models\Video  $video
      * @return \Illuminate\Http\Response
      */
-    public function show(VideoComments $videoComments)
+    public function show(Video $id)
     {
-        //
+        dd($id);
+        return $video;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\VideoComments  $videoComments
+     * @param  \App\Models\Video  $video
      * @return \Illuminate\Http\Response
      */
-    public function edit(VideoComments $videoComments)
+    public function edit(Video $video)
     {
         //
     }
@@ -64,11 +92,11 @@ class VideoCommentsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateVideoCommentsRequest  $request
-     * @param  \App\Models\VideoComments  $videoComments
+     * @param  \App\Http\Requests\UpdateVideoRequest  $request
+     * @param  \App\Models\Video  $video
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateVideoCommentsRequest $request, VideoComments $videoComments)
+    public function update(UpdateVideoRequest $request, Video $video)
     {
         //
     }
@@ -76,10 +104,10 @@ class VideoCommentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\VideoComments  $videoComments
+     * @param  \App\Models\Video  $video
      * @return \Illuminate\Http\Response
      */
-    public function destroy(VideoComments $videoComments)
+    public function destroy(Video $video)
     {
         //
     }

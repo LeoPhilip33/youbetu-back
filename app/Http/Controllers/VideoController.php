@@ -16,6 +16,10 @@ class VideoController extends Controller
     public function index()
     {
         $videos = Video::all();
+       foreach($videos as $video){
+           $video->username = $video->user->name;
+           $video->userPhoto = $video->user->photo;
+       }
         return $videos;
     }
 
@@ -72,9 +76,10 @@ class VideoController extends Controller
      * @param  \App\Models\Video  $video
      * @return \Illuminate\Http\Response
      */
-    public function show(Video $video)
+    public function show(Video $id)
     {
-        //
+        dd($id);
+        return $video;
     }
 
     /**

@@ -14,13 +14,27 @@ class RegisterController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => ['required', 'email', 'unique:users'],
+            'photo' => 'required',
             'password' => ['required', 'confirmed']
         ]);
+        $input = $request->all();
+
+        $photoName;
+
+        if ($photo = $request->file('photo')) {
+            $destinationPath = 'upload/photos/';
+            $photoName = date('YmdHis') . "." . $photo->getClientOriginalExtension();
+            $photo->move($destinationPath, $photoName);
+            
+        }
+
+        $password = Hash::make($request->password);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'photo' => $photoName,
+            'password' => $password
         ]);
 
         
