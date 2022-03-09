@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\VideoDislike;
+use App\Models\Video;
 use App\Http\Requests\StoreVideoDislikeRequest;
 use App\Http\Requests\UpdateVideoDislikeRequest;
 
@@ -16,6 +17,51 @@ class VideoDislikeController extends Controller
     public function index()
     {
         //
+    }
+
+    public function checkDislike($id, $dislikerId)
+    {
+
+        $video = Video::find($id);
+        $check = VideoDislike::where([['video_id', '=' ,$id],['disliker_id', '=' ,$dislikerId]])->first();
+        // dd($check);
+        if($check === null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public function dislike(UpdateVideoDislikeRequest $request)
+    {
+
+        $videoDislike = $request->validate([
+            'video_id' => 'required',
+            'disliker_id' => 'required',
+        ]);
+
+        $check = VideoDislike::where(
+            [
+                ['video_id', '=', $request->video_id],
+                ['disliker_id', '=', $request->disliker_id]
+            ]
+        )->first();
+
+        $video = Video::find($request->video_id);
+        if($check === null){
+            VideoDislike::create($videoDislike);
+            $video->dislikes = $video->dislikes+1;
+        }
+        else{
+            $check->delete();
+            $video->dislikes = $video->dislikes-1;
+        }
+
+        $video->save();
+        return $video;
+
+
     }
 
     /**
