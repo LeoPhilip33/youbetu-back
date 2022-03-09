@@ -52,14 +52,15 @@ class VideoDislikeController extends Controller
         if($check === null){
             VideoDislike::create($videoDislike);
             $video->dislikes = $video->dislikes+1;
+            $video->save();
+            return 1;
         }
         else{
             $check->delete();
             $video->dislikes = $video->dislikes-1;
+            $video->save();
+            return 0;
         }
-
-        $video->save();
-        return $video;
 
 
     }

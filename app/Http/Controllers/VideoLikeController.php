@@ -52,14 +52,16 @@ class VideoLikeController extends Controller
         if($check === null){
             VideoLike::create($videoLike);
             $video->likes = $video->likes+1;
+            $video->save();
+            return 1;
         }
         else{
             $check->delete();
             $video->likes = $video->likes-1;
+            $video->save();
+            return 0;
         }
 
-        $video->save();
-        return $video;
 
 
     }
