@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserSub;
 use App\Http\Requests\StoreUserSubRequest;
 use App\Http\Requests\UpdateUserSubRequest;
+use App\Models\User;
 
 class UserSubController extends Controller
 {
@@ -33,12 +34,20 @@ class UserSubController extends Controller
             ]
         )->first();
 
+        $user = User::find($request->user_id);
         if($check === null){
             UserSub::create($userSub);
+            $user->subscriber = $user->subscriber+1;
         }
         else{
             $check->delete();
+            $user->subscriber = $user->subscriber-1;
         }
+
+        $user->save();
+        return $user;
+
+
     }
 
     /**

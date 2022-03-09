@@ -42,6 +42,7 @@ Route::get('token/{id}', [TokenController::class, 'index']);
 
 Route::apiResource('videos', VideoController::class);
 Route::get('video/{id}', [GetVideoController::class, 'index']);
+Route::get('check-sub/{id}&{sub_id}', [GetVideoController::class, 'checkSub']);
 
 
 Route::post('subscribe', [UserSubController::class, 'subscribe']);
