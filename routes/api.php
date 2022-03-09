@@ -11,6 +11,7 @@ use App\Http\Controllers\GetVideoController;
 use App\Http\Controllers\UserSubController;
 use App\Http\Controllers\VideoLikeController;
 use App\Http\Controllers\VideoDislikeController;
+use App\Http\Controllers\VideoCommentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +56,11 @@ Route::get('check-like/{id}&{sub_id}', [VideoLikeController::class, 'checkLike']
 
 Route::post('dislike', [VideoDislikeController::class, 'dislike']);
 Route::get('check-dislike/{id}&{sub_id}', [VideoDislikeController::class, 'checkDislike']);
+
+
+Route::post('comment', [VideoCommentsController::class, 'store']);
+Route::get('comments/{id}', [VideoCommentsController::class, 'videoComments']);
+Route::get('comment/{id}', [VideoCommentsController::class, 'comment']);
 
 
 

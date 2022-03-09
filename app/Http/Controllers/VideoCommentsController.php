@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Video;
+use App\Models\VideoComments;
 use App\Http\Requests\StoreVideoRequest;
 use App\Http\Requests\UpdateVideoRequest;
 
-class GetVideoController extends Controller
+class VideoCommentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,19 @@ class GetVideoController extends Controller
      */
     public function index()
     {
-        $videos = Video::all();
-        return $videos;
+
+    }
+
+    public function videoComments($id){
+        $videoComments = VideoComments::where('video_id', '=', $id )->get();
+
+        return $videoComments;
+    }
+
+    public function comment($id){
+        $videoComments = VideoComments::find($id);
+
+        return $videoComments;
     }
 
     /**
@@ -37,32 +48,17 @@ class GetVideoController extends Controller
      */
     public function store(StoreVideoRequest $request)
     {
-         $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'miniature' => 'required',
-            'video' => 'required',
+        $videoComment = $request->validate([
+            'video_id' => 'required',
             'user_id' => 'required',
+            'comment' => 'required',
         ]);
 
 
-        $input = $request->all();
-
-        if ($miniature = $request->file('miniature')) {
-            $destinationPath = 'upload/miniatures/';
-            $miniatureName = date('YmdHis') . "." . $miniature->getClientOriginalExtension();
-            $miniature->move($destinationPath, $miniatureName);
-            $input['miniature'] = $miniatureName;
-        }
-        if ($video = $request->file('video')) {
-            $destinationPath = 'upload/videos/';
-            $videoName = date('YmdHis') . "." . $video->getClientOriginalExtension();
-            $video->move($destinationPath, $videoName);
-            $input['video'] = $videoName;
-        }
+       
 
 
-        Video::create($input);
+        VideoComments::create($videoComment);
         
     }
 
