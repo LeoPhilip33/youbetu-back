@@ -41,7 +41,7 @@ class VideoController extends Controller
      */
     public function store(StoreVideoRequest $request)
     {
-         $request->validate([
+        $request->validate([
             'title' => 'required',
             'description' => 'required',
             'miniature' => 'required',

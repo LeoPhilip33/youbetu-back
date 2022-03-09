@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'photo',
+        'subscriber',
         'password',
     ];
 
@@ -45,5 +46,9 @@ class User extends Authenticatable
 
     public function videos(){
         return $this->hasMany(Video::class);
+    }
+
+    public function subscribers(){
+        return $this->hasMany(UserSub::class);
     }
 }

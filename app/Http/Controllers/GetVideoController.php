@@ -17,7 +17,7 @@ class GetVideoController extends Controller
     {
         $video = Video::find($id);
         // dd($video);
-        return $video;
+        return [$video, $video->user];
     }
 
     

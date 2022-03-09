@@ -5,19 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Video extends Model
+class UserSub extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'description',
-        'miniature',
-        'video',
-        'user_id',
-        'views',
-        'likes',
-        'dislikes',
+       'user_id',
+       'subscriber_id'
     ];
 
     public function user(){
