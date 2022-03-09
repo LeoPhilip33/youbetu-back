@@ -25,23 +25,7 @@ class GetVideoController extends Controller
         return [$video, $video->user];
     }
 
-    public function checkSub($id, $subId)
-    {
-
-        $video = Video::find($id);
-
-        $userId = $video->user->id;
-        $check = UserSub::where([['user_id', '=' ,$userId],['subscriber_id', '=' ,$subId]])->first();
-        // dd($check);
-        if($check === null){
-            return false;
-        }
-        else{
-            return true;
-        }
-
-       
-    }
+    
 
     
 }

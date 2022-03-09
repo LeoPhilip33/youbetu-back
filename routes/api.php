@@ -9,6 +9,7 @@ use App\Http\Controllers\UserTest;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\GetVideoController;
 use App\Http\Controllers\UserSubController;
+use App\Http\Controllers\VideoLikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,10 +43,15 @@ Route::get('token/{id}', [TokenController::class, 'index']);
 
 Route::apiResource('videos', VideoController::class);
 Route::get('video/{id}', [GetVideoController::class, 'index']);
-Route::get('check-sub/{id}&{sub_id}', [GetVideoController::class, 'checkSub']);
 
 
 Route::post('subscribe', [UserSubController::class, 'subscribe']);
+Route::get('check-sub/{id}&{sub_id}', [UserSubController::class, 'checkSub']);
+
+
+Route::post('like', [VideoLikeController::class, 'like']);
+Route::get('check-like/{id}&{sub_id}', [VideoLikeController::class, 'checkLike']);
+Route::get('check-dislike/{id}&{sub_id}', [GetVideoController::class, 'checkSub']);
 
 
 

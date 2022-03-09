@@ -6,6 +6,7 @@ use App\Models\UserSub;
 use App\Http\Requests\StoreUserSubRequest;
 use App\Http\Requests\UpdateUserSubRequest;
 use App\Models\User;
+use App\Models\Video;
 
 class UserSubController extends Controller
 {
@@ -17,6 +18,24 @@ class UserSubController extends Controller
     public function index()
     {
         //
+    }
+
+    public function checkSub($id, $subId)
+    {
+
+        $video = Video::find($id);
+
+        $userId = $video->user->id;
+        $check = UserSub::where([['user_id', '=' ,$userId],['subscriber_id', '=' ,$subId]])->first();
+        // dd($check);
+        if($check === null){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+       
     }
 
     public function subscribe(UpdateUserSubRequest $request)
