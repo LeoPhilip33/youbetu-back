@@ -14,9 +14,33 @@ class VideoLikeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+       
+        $videos = VideoLike::where('liker_id', '=', $id )->get();
+
+
+        // $test = $videos[0]->video->id;
+        // dd($test);
+
+
+        $likedVideos = [];
+    
+        foreach($videos as $video){
+            $likedVideos[] = $video->video->id;
+        }
+
+        $test = Video::whereIn('id', $likedVideos )->get();
+        
+        foreach($test as $video){
+           
+
+            $video->username = $video->user->name;
+            $video->userPhoto = $video->user->photo;
+        }
+        return $test;
+    
+
     }
 
     public function checkLike($id, $likerId)

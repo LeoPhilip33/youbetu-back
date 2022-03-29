@@ -51,6 +51,7 @@ Route::post('subscribe', [UserSubController::class, 'subscribe']);
 Route::get('check-sub/{id}&{sub_id}', [UserSubController::class, 'checkSub']);
 
 
+Route::get('liked-videos/{id}', [VideoLikeController::class, 'index']);
 Route::post('like', [VideoLikeController::class, 'like']);
 Route::get('check-like/{id}&{sub_id}', [VideoLikeController::class, 'checkLike']);
 

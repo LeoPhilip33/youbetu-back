@@ -16,13 +16,14 @@ class VideoController extends Controller
     public function index()
     {
         $videos = Video::all();
-       foreach($videos as $video){
+        foreach($videos as $video){
            $video->username = $video->user->name;
            $video->userPhoto = $video->user->photo;
        }
         return $videos;
     }
 
+    
     /**
      * Show the form for creating a new resource.
      *
