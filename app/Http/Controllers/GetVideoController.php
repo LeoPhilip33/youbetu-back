@@ -25,6 +25,17 @@ class GetVideoController extends Controller
         return [$video, $video->user];
     }
 
+    public function userVideo($id)
+    {
+        $videos = Video::where('user_id', '=',$id)->get();
+
+        foreach($videos as $video){
+            $video->username = $video->user->name;
+            $video->userPhoto = $video->user->photo;
+         }
+        return $videos;
+    }
+
     
 
     

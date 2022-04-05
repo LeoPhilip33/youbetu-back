@@ -45,10 +45,12 @@ Route::get('token/{id}', [TokenController::class, 'index']);
 
 Route::apiResource('videos', VideoController::class);
 Route::get('video/{id}', [GetVideoController::class, 'index']);
+Route::get('video-user/{id}', [GetVideoController::class, 'userVideo']);
 
 
 Route::post('subscribe', [UserSubController::class, 'subscribe']);
 Route::get('check-sub/{id}&{sub_id}', [UserSubController::class, 'checkSub']);
+Route::get('subs/{id}', [UserSubController::class, 'getSubs']);
 
 
 Route::get('liked-videos/{id}', [VideoLikeController::class, 'index']);

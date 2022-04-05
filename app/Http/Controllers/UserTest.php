@@ -16,4 +16,5 @@ class UserTest extends Controller
         $userId = User::find($id);
         return $userId;
     }
+    
 }

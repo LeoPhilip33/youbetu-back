@@ -20,6 +20,18 @@ class UserSubController extends Controller
         //
     }
 
+    public function getSubs($id){
+
+        $subs = UserSub::where('subscriber_id', '=',$id)->get();
+
+        foreach($subs as $sub){
+            $sub->photo = $sub->user->photo;
+            $sub->name = $sub->user->name;
+            $sub->subscriber = $sub->user->subscriber;
+        }
+        return $subs;
+    }
+
     public function checkSub($id, $subId)
     {
 

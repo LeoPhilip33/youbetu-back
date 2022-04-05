@@ -19,7 +19,7 @@ class VideoController extends Controller
         foreach($videos as $video){
            $video->username = $video->user->name;
            $video->userPhoto = $video->user->photo;
-       }
+        }
         return $videos;
     }
 
