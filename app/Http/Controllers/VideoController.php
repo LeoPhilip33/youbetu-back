@@ -15,7 +15,7 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $videos = Video::all();
+        $videos = Video::orderBy('views', 'DESC')->get();
         foreach($videos as $video){
            $video->username = $video->user->name;
            $video->userPhoto = $video->user->photo;
@@ -79,7 +79,6 @@ class VideoController extends Controller
      */
     public function show(Video $id)
     {
-        dd($id);
         return $video;
     }
 
